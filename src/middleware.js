@@ -8,6 +8,7 @@ export async function middleware(request) {
 
   if (userStatus !== "User" && userStatus !== "Admin") {
     console.log("userStatus", userStatus);
+    console.log("request", request);
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
