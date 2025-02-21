@@ -4,6 +4,11 @@ import { jwtVerify } from "@/utils/jwtVerify";
 
 export async function middleware(request) {
   const token = request.cookies.get("SG_token");
+
+  if (!token && request.nextUrl.pathname !== "/") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   const { userStatus } = await jwtVerify(token);
 
   if (userStatus !== "User" && userStatus !== "Admin") {
