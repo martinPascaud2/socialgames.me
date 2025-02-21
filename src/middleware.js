@@ -7,6 +7,7 @@ export async function middleware(request) {
   const { userStatus } = await jwtVerify(token);
 
   if (userStatus !== "User" && userStatus !== "Admin") {
+    console.log("userStatus", userStatus);
     return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
   }
 
