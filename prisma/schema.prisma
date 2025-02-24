@@ -194,6 +194,7 @@ model User {
   podiumLastParams             String?                   @db.LongText
   podiumTops                   String?                   @db.LongText
   lastPlayed                   String?
+  tmpToken                     String?
   DrawLink                     DrawLink[]
   DrawingWordsOnUsers          DrawingWordsOnUsers[]
   Friend_Friend_friendIdToUser Friend[]                  @relation("Friend_friendIdToUser")

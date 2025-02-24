@@ -1,39 +1,36 @@
 "use server";
 
 import { cookies } from "next/headers";
+
 import { jwtVerify } from "./jwtVerify";
 import prisma from "./prisma";
 
-export default async function getUser() {
-  //   const token = cookies().get("SG_token");
-
+export default async function getUser({ userId, tmpToken }) {
   const cookieStore = await cookies();
   const token = cookieStore.get("SG_token");
 
-  const { userMail } = await jwtVerify(token);
-
-  let user;
-  if (userMail)
-    user = await prisma.user.findFirst({
-      where: {
-        email: userMail,
-      },
+  if (!token) {
+    const user = await prisma.user.findFirst({
+      where: { id: userId },
     });
+    const { tmpToken: dataToken } = user;
 
-  return user;
-}
+    if (tmpToken !== dataToken) return null;
+    else {
+      return user;
+    }
+  } else {
+    const { userMail } = await jwtVerify(token);
+    let user;
 
-export async function getUserParams() {
-  const token = cookies().get("SG_token");
-  const { userMail } = await jwtVerify(token);
+    if (userMail) {
+      user = await prisma.user.findFirst({
+        where: {
+          email: userMail,
+        },
+      });
 
-  const userParams = (
-    await prisma.user.findFirst({
-      where: {
-        email: userMail,
-      },
-    })
-  )?.params;
-
-  return userParams;
+      return user;
+    } else return null;
+  }
 }
