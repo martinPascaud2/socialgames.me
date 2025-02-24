@@ -17,6 +17,10 @@ export default async function getUser({ userId, tmpToken }) {
 
     if (tmpToken !== dataToken) return null;
     else {
+      await prisma.user.update({
+        where: { id: userId },
+        data: { tmpToken: null },
+      });
       return user;
     }
   } else {
