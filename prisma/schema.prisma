@@ -99,23 +99,24 @@ model PtitbacthemesOnUsers {
 }
 
 model Room {
-  id            Int           @id @default(autoincrement())
-  private       Boolean       @default(false)
-  game          String
-  token         String
-  admin         String
-  adminLocation String?       @db.LongText
-  gamers        String?       @db.LongText
-  guests        String?       @db.LongText
-  multiGuests   String?       @db.LongText
-  started       Boolean       @default(false)
-  gameData      String?       @db.LongText
-  creationDate  DateTime      @db.DateTime(0)
-  options       String?       @db.LongText
-  haveLeft      String?       @db.LongText
-  viceAdmin     String?
-  RoomArrival   RoomArrival[]
-  User          User[]
+  id               Int           @id @default(autoincrement())
+  private          Boolean       @default(false)
+  game             String
+  token            String
+  admin            String
+  adminLocation    String?       @db.LongText
+  gamers           String?       @db.LongText
+  guests           String?       @db.LongText
+  multiGuests      String?       @db.LongText
+  started          Boolean       @default(false)
+  gameData         String?       @db.LongText
+  creationDate     DateTime      @db.DateTime(0)
+  options          String?       @db.LongText
+  haveLeft         String?       @db.LongText
+  viceAdmin        String?
+  actionInProgress Boolean       @default(false)
+  RoomArrival      RoomArrival[]
+  User             User[]
 }
 
 model RoomArrival {
@@ -195,8 +196,9 @@ model User {
   lastPlayed                   String?
   tmpToken                     String?
   huntingPosition              String?                   @db.LongText
-  chasseLastParams             String?                   @db.LongText
   triactionLastParams          String?                   @db.LongText
+  undercoverLastParams         String?                   @db.LongText
+  huntedLastParams             String?                   @db.LongText
   DrawLink                     DrawLink[]
   DrawingWordsOnUsers          DrawingWordsOnUsers[]
   Friend_Friend_friendIdToUser Friend[]                  @relation("Friend_friendIdToUser")
